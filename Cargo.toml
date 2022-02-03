@@ -1,0 +1,26 @@
+[package]
+name = "embedded_crypto_benchmark"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+panic = "abort"
+
+[dependencies]
+aes = "0.7.5"
+blowfish = "0.8.0"
+cast5 = "0.10.0"
+des = "0.7.0"
+idea = "0.4.0"
+kuznyechik = "0.7.2"
+magma = "0.7.0"
+rc2 = "0.7.0"
+serpent = "0.4.0"
+sm4 = "0.4.0"
+twofish = "0.6.0"
+threefish = "0.4.0"
+benchmark-simple = "0.1.7"
+#liar = { git = "https://github.com/ranweiler/liar.git" }
+generic-array = "0.14.5"
+cipher = "0.3.0"
+xxtea = { path = "../XXTEA-Rust" }
