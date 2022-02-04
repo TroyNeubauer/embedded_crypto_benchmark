@@ -82,7 +82,7 @@ impl<'p> Timer<'p> {
     }
 }
 
-const ROUNDS: usize = 300;
+const ROUNDS: usize = 100;
 const SAMPLE_COUNT: usize = 10;
 
 #[cfg(feature = "std")]
@@ -146,25 +146,27 @@ fn main() -> ! {
     let mut data = Data { a, b, key };
     core::hint::black_box(&mut data);
 
-    let functions: [(BenchFn, &'static str); 4] = [
-        ////(test_aes_128, "AES-128"),
-        ////(test_aes_192, "AES-192"),
-        ////(test_aes_256, "AES-256"),
-        ////(test_blowfish, "Blowfish"),
-        //(test_cast5, "Cast5"),
-        ////(test_des, "DES"),
-        ////(test_3des, "Triple DES"),
-        //(test_idea, "Idea"),
-        ////(test_kuznyechik, "Kuznyechik"),
-        (test_rc2, "Rc2"),//7.59s, 7.59, 22.92
-        //(test_serpent, "Serpent"),//VERY SLOW
-        (test_sm4, "Sm4"),//7.08, 7.06, 21.16
-        //(test_twofish, "Twofish"),
-        //(test_threefish256, "Threefish-256"),//49.73
-        //(test_threefish512, "Threefish-512"),//46.69
-        //(test_threefish1024, "Threefish-1024"),//47.96
-        (test_xor, "Xor"),//0.??, 0.3, 0.62
-        (test_xxtea, "XXTEA"),//6.35, 6.30, 19.28
+    let functions: [(BenchFn, &'static str); 6] = [
+        (test_aes_128, "AES-128"),// 32.06 < for 100 rounds x 10 samples
+        (test_aes_192, "AES-192"),//36.31
+        (test_aes_256, "AES-256"),//41.88
+        (test_blowfish, "Blowfish"),//26.22
+        (test_cast5, "Cast5"),//5.75
+        //(test_des, "DES"),//VERY SLOW
+        //(test_3des, "Triple DES"),//VERY SLOW
+        (test_idea, "Idea"),//7.70
+        //(test_kuznyechik, "Kuznyechik"),//VERY SLOW
+
+        //100 rounds x 10 samples, then 100 rounds x 10 samples, then 300 rounds x 10 samples
+        //(test_rc2, "Rc2"),//7.59s, 7.59, 22.92
+        ////(test_serpent, "Serpent"),//VERY SLOW
+        //(test_sm4, "Sm4"),//7.08, 7.06, 21.16
+        ////(test_twofish, "Twofish"),
+        ////(test_threefish256, "Threefish-256"),//49.73
+        ////(test_threefish512, "Threefish-512"),//46.69
+        ////(test_threefish1024, "Threefish-1024"),//47.96
+        //(test_xor, "Xor"),//0.??, 0.3, 0.62
+        //(test_xxtea, "XXTEA"),//6.35, 6.30, 19.28
     ];
 
     #[cfg(feature = "std")]
