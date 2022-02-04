@@ -4,7 +4,21 @@ version = "0.1.0"
 edition = "2021"
 
 [profile.release]
-panic = "abort"
+debug = true
+opt-level = 'z'
+lto = "fat"
+
+[features]
+default = []
+std = []
+arm = [
+    "cortex-m",
+    "panic-halt",
+    "stm32f4xx-hal",
+    "cortex-m-rt",
+    "cortex-m-semihosting",
+    "embedded-hal",
+]
 
 [dependencies]
 aes = "0.7.5"
@@ -19,8 +33,15 @@ serpent = "0.4.0"
 sm4 = "0.4.0"
 twofish = "0.6.0"
 threefish = "0.4.0"
-benchmark-simple = "0.1.7"
-#liar = { git = "https://github.com/ranweiler/liar.git" }
+#benchmark-simple = "0.1.7"
 generic-array = "0.14.5"
 cipher = "0.3.0"
 xxtea = { path = "../XXTEA-Rust" }
+introsort = { version = "0.6.0", default-features = false }
+
+cortex-m = { version = "0.7.4", optional = true }
+panic-halt = { version = "0.2", optional = true }
+stm32f4xx-hal = { version = "0.9", features = ["rt", "stm32f401"], optional = true }
+cortex-m-rt = { version = "0.6", optional = true }
+cortex-m-semihosting = { version = "0.3.7", optional = true }
+embedded-hal = { version = "0.2", optional = true }
