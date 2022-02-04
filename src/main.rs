@@ -146,27 +146,41 @@ fn main() -> ! {
     let mut data = Data { a, b, key };
     core::hint::black_box(&mut data);
 
-    let functions: [(BenchFn, &'static str); 6] = [
+    let functions: [(BenchFn, &'static str); 10] = [
+        //all tests done encrypting 1024 bytes of data 100 rounds for 10-30 samples
+        //This means we encrypt 1024 * 100 * 10 = 1,024,000 bytes ~ 1MB for 10 samples and ~3MB for 30 samples
+
+        //31.2 KB/s
         (test_aes_128, "AES-128"),// 32.06 < for 100 rounds x 10 samples
+        //27.5 KB/s
         (test_aes_192, "AES-192"),//36.31
+        //23.9 KB/s
         (test_aes_256, "AES-256"),//41.88
+        //38.1 KB/s
         (test_blowfish, "Blowfish"),//26.22
+        //173.9 KB/s
         (test_cast5, "Cast5"),//5.75
+
         //(test_des, "DES"),//VERY SLOW
         //(test_3des, "Triple DES"),//VERY SLOW
+        //129.9 KB/s
         (test_idea, "Idea"),//7.70
         //(test_kuznyechik, "Kuznyechik"),//VERY SLOW
 
         //100 rounds x 10 samples, then 100 rounds x 10 samples, then 300 rounds x 10 samples
-        //(test_rc2, "Rc2"),//7.59s, 7.59, 22.92
-        ////(test_serpent, "Serpent"),//VERY SLOW
-        //(test_sm4, "Sm4"),//7.08, 7.06, 21.16
-        ////(test_twofish, "Twofish"),
-        ////(test_threefish256, "Threefish-256"),//49.73
-        ////(test_threefish512, "Threefish-512"),//46.69
-        ////(test_threefish1024, "Threefish-1024"),//47.96
-        //(test_xor, "Xor"),//0.??, 0.3, 0.62
-        //(test_xxtea, "XXTEA"),//6.35, 6.30, 19.28
+        //130.9 KB/s
+        (test_rc2, "Rc2"),//7.59s, 7.59, 22.92
+        //(test_serpent, "Serpent"),//VERY SLOW
+        //141.8 KB/s
+        (test_sm4, "Sm4"),//7.08, 7.06, 21.16
+        //(test_twofish, "Twofish"),
+        //(test_threefish256, "Threefish-256"),//49.73
+        //(test_threefish512, "Threefish-512"),//46.69
+        //(test_threefish1024, "Threefish-1024"),//47.96
+        //4.8 MB/s
+        (test_xor, "Xor"),//0.??, 0.3, 0.62
+        //155.6 KB/s
+        (test_xxtea, "XXTEA"),//6.35, 6.30, 19.28
     ];
 
     #[cfg(feature = "std")]
